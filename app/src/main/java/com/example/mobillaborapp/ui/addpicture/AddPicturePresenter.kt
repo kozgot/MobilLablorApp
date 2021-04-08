@@ -1,7 +1,9 @@
 package com.example.mobillaborapp.ui.addpicture
 
+import com.example.mobillaborapp.repository.network.NetworkInteractor
 import com.example.mobillaborapp.ui.Presenter
+import javax.inject.Inject
 
-object AddPicturePresenter : Presenter<AddPictureScreen?>() {
+class AddPicturePresenter @Inject constructor(networkInteractor: NetworkInteractor): Presenter<AddPictureScreen?>() {
     // todo: implementation
 }

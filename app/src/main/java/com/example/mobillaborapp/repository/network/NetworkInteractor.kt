@@ -1,4 +1,6 @@
 package com.example.mobillaborapp.repository.network
 
-class NetworkInteractor {
+import javax.inject.Inject
+
+class NetworkInteractor @Inject constructor(private var catPicsApi: CatAPI) {
 }
