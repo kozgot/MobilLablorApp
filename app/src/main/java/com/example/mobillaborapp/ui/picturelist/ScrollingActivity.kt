@@ -1,4 +1,4 @@
-package com.example.mobillaborapp.ui.list
+package com.example.mobillaborapp.ui.picturelist
 
 import android.os.Bundle
 import com.google.android.material.appbar.CollapsingToolbarLayout
