@@ -1,8 +1,8 @@
 language: android
 android:
  components:
- - build-tools-28.0.3
- - android-28
+ - build-tools-27.0.1
+ - android-27
  - android-21
  - add-on
  - extra
@@ -11,7 +11,7 @@ android:
  - extra-google-googleplayservices
  - extra-google-m2repository
  - extra-android-m2repository
- - addon-google_apis-google-28
+ - addon-google_apis-google-27
  - sys-img-armeabi-v7a-android-21
 before_install:
  - yes | sdkmanager "platforms;android-27"
