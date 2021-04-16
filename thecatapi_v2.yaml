@@ -1,0 +1,379 @@
+swagger: '2.0'
+info:
+  description: The Cat API - Cats as a Service. Get your API Key from - [TheCatAPI](https://thecatapi.com/)
+  version: '1.1'
+  title: TheCatAPI
+host: api.thecatapi.com
+basePath: /v1
+schemes:
+  - https
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /breeds:
+    get:
+      summary: Lists all breeds.
+      produces:
+        - application/json
+      parameters:
+        - name: x-api-key
+          in: header
+          description: >-
+            Generated header parameter. Example value
+            ='16d40230-356f-4ee1-83ab-b3b9189b52f4'
+          required: true
+          type: string
+          x-example: 16d40230-356f-4ee1-83ab-b3b9189b52f4
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Breeds'
+        '400':
+          description: bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /images:
+    get:
+      summary: Lists your uploaded images.
+      produces:
+        - application/json
+      parameters:
+        - name: x-api-key
+          in: header
+          description: >-
+            Generated header parameter. Example value
+            ='16d40230-356f-4ee1-83ab-b3b9189b52f4'
+          required: true
+          type: string
+          x-example: 16d40230-356f-4ee1-83ab-b3b9189b52f4
+        - name: limit
+          in: query
+          required: false
+          type: string
+          x-example: '3'
+        - name: page
+          in: query
+          required: false
+          type: string
+          x-example: '0'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Images'
+        '400':
+          description: bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /images/search:
+    get:
+      summary: Lists all public images.
+      produces:
+        - application/json
+      parameters:
+        - name: x-api-key
+          in: header
+          description: >-
+            Generated header parameter. Example value
+            ='16d40230-356f-4ee1-83ab-b3b9189b52f4'
+          required: true
+          type: string
+          x-example: 16d40230-356f-4ee1-83ab-b3b9189b52f4
+        - name: limit
+          in: query
+          required: false
+          type: string
+          x-example: '3'
+        - name: page
+          in: query
+          required: false
+          type: string
+          x-example: '0'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Images'
+        '400':
+          description: bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  '/images/{image_id}':
+    get:
+      summary: Gets an image by id.
+      produces:
+        - application/json
+      parameters:
+        - name: image_id
+          in: path
+          required: true
+          type: string
+          x-example: 'AS3GFEDQM'
+        - name: x-api-key
+          in: header
+          description: >-
+            Generated header parameter. Example value
+            ='16d40230-356f-4ee1-83ab-b3b9189b52f4'
+          required: false
+          type: string
+          x-example: 16d40230-356f-4ee1-83ab-b3b9189b52f4
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Image'
+        '400':
+          description: Definition generated from Swagger Inspector
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    delete:
+      summary: Deletes an image.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: image_id
+          in: path
+          required: true
+          type: string
+          x-example: 'AS3GFEDQM'
+        - name: x-api-key
+          in: header
+          description: >-
+            Generated header parameter. Example value
+            ='16d40230-356f-4ee1-83ab-b3b9189b52f4'
+          required: true
+          type: string
+          x-example: 16d40230-356f-4ee1-83ab-b3b9189b52f4
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /images/upload:
+    post:
+      summary: Uploads a new image.
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: file
+          type: file
+          required: true
+          description: The file to upload.
+        - in: formData
+          name: breed_ids
+          type: string
+          description: Optional. The id of the breed of the cat. Only one id can be added.
+          x-example: sibe
+        - name: x-api-key
+          in: header
+          description: >-
+            Generated header parameter. Example value
+            ='16d40230-356f-4ee1-83ab-b3b9189b52f4'
+          required: true
+          type: string
+          x-example: 16d40230-356f-4ee1-83ab-b3b9189b52f4
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/UploadResponse'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+definitions:
+  Breeds:
+    type: array
+    items:
+      $ref: '#/definitions/Breed'
+  Images:
+    type: array
+    items:
+      $ref: '#/definitions/Image'
+  Image:
+    properties:
+      breeds:
+        type: array
+        items:
+          $ref: '#/definitions/Breed'
+      categories:
+        type: array
+        items:
+          $ref: '#/definitions/Category'
+      id:
+        type: string
+      url:
+        type: string
+      width:
+        type: integer
+        format: int32
+      height:
+        type: integer
+        format: int32
+      sub_id:
+        type: string
+      created_at:
+        type: string
+      original_filename:
+        type: string
+      breed_ids:
+        type: object
+  ImageShort:
+    properties:
+      id:
+        type: string
+      url:
+        type: string
+      width:
+        type: integer
+        format: int32
+      height:
+        type: integer
+        format: int32
+  Category:
+    properties:
+      id:
+        type: integer
+        format: int32
+      name:
+        type: string
+  Weight:
+    properties:
+      imperial:
+        type: string
+      metric:
+        type: string
+  Breed:
+    properties:
+      id:
+        type: integer
+        format: int32
+      name:
+        type: string
+      indoor:
+        type: integer
+        format: int32
+      image:
+        $ref: '#/definitions/ImageShort'
+      temperament:
+        type: string
+      life_span:
+        type: string
+      alt_names:
+        type: string
+      wikipedia_url:
+        type: string
+      vetstreet_url:
+        type: string
+      reference_image_id:
+        type: string
+      origin:
+        type: string
+      weight:
+        $ref: '#/definitions/Weight'
+      experimental:
+        type: integer
+        format: int32
+      hairless:
+        type: integer
+        format: int32
+      natural:
+        type: integer
+        format: int32
+      rare:
+        type: integer
+        format: int32
+      rex:
+        type: integer
+        format: int32
+      supress_tail:
+        type: integer
+        format: int32
+      short_legs:
+        type: integer
+        format: int32
+      hypoallergenic:
+        type: integer
+        format: int32
+      adaptability:
+        type: integer
+        format: int32
+      affection_level:
+        type: integer
+        format: int32
+      country_code:
+        type: string
+      child_friendly:
+        type: integer
+        format: int32
+      dog_friendly:
+        type: integer
+        format: int32
+      energy_level:
+        type: integer
+        format: int32
+      grooming:
+        type: integer
+        format: int32
+      health_issues:
+        type: integer
+        format: int32
+      intelligence:
+        type: integer
+        format: int32
+      shedding_level:
+        type: integer
+        format: int32
+      social_needs:
+        type: integer
+        format: int32
+      stranger_friendly:
+        type: integer
+        format: int32
+      vocalisation:
+        type: integer
+        format: int32
+  UploadResponse:
+    properties:
+      id:
+        type: string
+      url:
+        type: string
+      width:
+        type: integer
+        format: int32
+      height:
+        type: integer
+        format: int32
+      original_filename:
+        type: string
+      pending:
+        type: integer
+        format: int32
+      approved:
+        type: integer
+        format: int32
+  Headers:
+    properties:
+      Access-Control-Allow-Origin:
+        type: string
+  ErrorResponse:
+    properties:
+      message:
+        type: string
+      headers:
+        $ref: '#/definitions/Headers'
+      status:
+        type: integer
+        format: int32
+      level:
+        type: string
