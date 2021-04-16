@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.mobillaborapp.model.CatPicture
+import com.example.mobillaborapp.model.Image
 
-@Database(entities = arrayOf(CatPicture::class), version = 4)
+@Database(entities = arrayOf(Image::class), version = 4)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun catPicDao(): CatPicDAO
