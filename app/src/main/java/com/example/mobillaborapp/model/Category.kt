@@ -8,16 +8,4 @@ class Category {
 
     @SerializedName("name")
     var name: String? = null
-
-    override fun equals(o: Any?): Boolean {
-        if (this === o) {
-            return true
-        }
-        if (o == null || javaClass != o.javaClass) {
-            return false
-        }
-        val category = o as Category
-        return id == category.id &&
-                name == category.name
-    }
 }
