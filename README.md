@@ -1,6 +1,5 @@
 # MobilLablorApp       [![Build Status](https://travis-ci.com/kozgot/MobilLablorApp.svg?branch=master)](https://travis-ci.com/kozgot/MobilLablorApp)
 
-## Videos
+## More information
 
-Lab 4 (architecture): 
-https://drive.google.com/file/d/1yx3zVVINag1FAM-ombqffBKz5b5HCtS6/view?usp=sharing 
+Links to the lab videos, the swagger hub and description of the API used, etc. can be found on the [Wiki Page](https://github.com/kozgot/MobilLablorApp/wiki)
