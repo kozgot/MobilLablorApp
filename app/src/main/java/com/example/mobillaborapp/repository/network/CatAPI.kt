@@ -2,7 +2,6 @@ package com.example.mobillaborapp.repository.network
 
 import com.example.mobillaborapp.model.Breed
 import com.example.mobillaborapp.model.Image
-import com.example.mobillaborapp.model.ImagesResult
 import com.example.mobillaborapp.model.UploadResponse
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -18,7 +17,7 @@ interface CatAPI {
     @GET("breeds")
     fun listBreeds(
         @Header("x-api-key") xApiKey: String?
-    ): Call<ArrayList<Breed>>?
+    ): Call<ArrayList<Breed>>
 
     /**
      * Lists your uploaded images.
@@ -33,7 +32,7 @@ interface CatAPI {
         @Header("x-api-key") xApiKey: String,
         @Query("limit") limit: Int?,
         @Query("page") page: Int?
-    ): Call<ImagesResult>
+    ): Call<ArrayList<Image>>
 
     /**
      * Lists all public images.
@@ -45,10 +44,10 @@ interface CatAPI {
     </Images> */
     @GET("images/search")
     fun listPublicImages(
-        @Header("x-api-key") xApiKey: String?,
-        @Query("limit") limit: String?,
-        @Query("page") page: String?
-    ): Call<ArrayList<Image>?>?
+        @Header("x-api-key") xApiKey: String,
+        @Query("limit") limit: Int?,
+        @Query("page") page: Int?
+    ): Call<ArrayList<Image>>
 
     /**
      * Uploads a new image.
@@ -61,10 +60,10 @@ interface CatAPI {
     @Multipart
     @POST("images/upload")
     fun uploadImage(
-        @Part("file\"; filename=\"file\"") file: RequestBody?,
-        @Header("x-api-key") xApiKey: String?,
+        @Part("file\"; filename=\"file\"") file: RequestBody,
+        @Header("x-api-key") xApiKey: String,
         @Part("breed_ids") breedIds: String?
-    ): Call<UploadResponse?>?
+    ): Call<UploadResponse>
 
     /**
      * Gets an image by id.
@@ -75,8 +74,8 @@ interface CatAPI {
     </Image> */
     @GET("images/{image_id}")
     fun getImage(
-        @Path("image_id") imageId: String?, @Header("x-api-key") xApiKey: String?
-    ): Call<Image?>?
+        @Path("image_id") imageId: String, @Header("x-api-key") xApiKey: String
+    ): Call<Image>
 
     /**
      * Deletes an image.
@@ -87,6 +86,6 @@ interface CatAPI {
     </Void> */
     @DELETE("images/{image_id}")
     fun deleteImage(
-        @Path("image_id") imageId: String?, @Header("x-api-key") xApiKey: String?
-    ): Call<Void?>?
+        @Path("image_id") imageId: String, @Header("x-api-key") xApiKey: String
+    ): Call<Void>
 }
