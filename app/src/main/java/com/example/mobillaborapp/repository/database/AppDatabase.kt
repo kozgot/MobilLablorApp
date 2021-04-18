@@ -8,5 +8,4 @@ import com.example.mobillaborapp.model.Image
 abstract class AppDatabase : RoomDatabase() {
     abstract fun imageDao(): ImageDAO
     abstract fun breedDao(): BreedDAO
-    abstract fun shortImageDao(): ShortImageDAO
 }

@@ -223,18 +223,6 @@ definitions:
         type: string
       breed_ids:
         type: object
-  ImageShort:
-    properties:
-      id:
-        type: string
-      url:
-        type: string
-      width:
-        type: integer
-        format: int32
-      height:
-        type: integer
-        format: int32
   Breed:
     properties:
       id:
@@ -245,8 +233,6 @@ definitions:
       indoor:
         type: integer
         format: int32
-      image:
-        $ref: '#/definitions/ImageShort'
       temperament:
         type: string
       life_span:

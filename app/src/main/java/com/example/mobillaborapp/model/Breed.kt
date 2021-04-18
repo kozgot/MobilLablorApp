@@ -2,6 +2,7 @@ package com.example.mobillaborapp.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
@@ -18,10 +19,6 @@ data class Breed (
         @ColumnInfo(name = "indoor")
         @SerializedName("indoor")
         var indoor: Int? = null,
-
-        @ColumnInfo(name = "image")
-        @SerializedName("image")
-        var image: ImageShort? = null,
 
         @ColumnInfo(name = "temperament")
         @SerializedName("temperament")
@@ -42,10 +39,6 @@ data class Breed (
         @ColumnInfo(name = "vetstreeturl")
         @SerializedName("vetstreet_url")
         var vetstreetUrl: String? = null,
-
-        @ColumnInfo(name = "referenceimageid")
-        @SerializedName("reference_image_id")
-        var referenceImageId: String? = null,
 
         @ColumnInfo(name = "origin")
         @SerializedName("origin")
