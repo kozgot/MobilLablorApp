@@ -16,7 +16,7 @@ interface CatAPI {
     </Breeds> */
     @GET("breeds")
     fun listBreeds(
-        @Header("x-api-key") xApiKey: String?
+        @Header("x-api-key") xApiKey: String
     ): Call<ArrayList<Breed>>
 
     /**
