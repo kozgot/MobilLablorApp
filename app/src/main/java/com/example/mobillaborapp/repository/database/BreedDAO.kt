@@ -9,7 +9,7 @@ import com.example.mobillaborapp.model.Breed
 @Dao
 interface BreedDAO {
     @Query("SELECT * FROM breed WHERE id = :id")
-    suspend fun getSpecificBreed(id: Int): List<Breed>
+    suspend fun getSpecificBreed(id: String): List<Breed>
 
     @Query("SELECT * FROM breed")
     suspend fun getAllBreeds(): List<Breed>

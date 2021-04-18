@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName
 data class Breed (
         @PrimaryKey
         @SerializedName("id")
-        var id: Int? = null,
+        var id: String? = null,
 
         @ColumnInfo(name = "name")
         @SerializedName("name")
@@ -19,6 +19,10 @@ data class Breed (
         @ColumnInfo(name = "indoor")
         @SerializedName("indoor")
         var indoor: Int? = null,
+
+        @ColumnInfo(name = "description")
+        @SerializedName("description")
+        var description: String? = null,
 
         @ColumnInfo(name = "temperament")
         @SerializedName("temperament")
