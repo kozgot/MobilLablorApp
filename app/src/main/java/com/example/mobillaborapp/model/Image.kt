@@ -11,10 +11,6 @@ data class Image(
         @SerializedName("breeds")
         var breeds: List<Breed> = ArrayList<Breed>(),
 
-        @ColumnInfo(name = "categories")
-        @SerializedName("categories")
-        var categories: List<Category> = ArrayList<Category>(),
-
         @PrimaryKey
         @SerializedName("id")
         var id: String? = null,

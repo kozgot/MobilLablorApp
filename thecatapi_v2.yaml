@@ -205,10 +205,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Breed'
-      categories:
-        type: array
-        items:
-          $ref: '#/definitions/Category'
       id:
         type: string
       url:
@@ -239,19 +235,6 @@ definitions:
       height:
         type: integer
         format: int32
-  Category:
-    properties:
-      id:
-        type: integer
-        format: int32
-      name:
-        type: string
-  Weight:
-    properties:
-      imperial:
-        type: string
-      metric:
-        type: string
   Breed:
     properties:
       id:
@@ -278,8 +261,6 @@ definitions:
         type: string
       origin:
         type: string
-      weight:
-        $ref: '#/definitions/Weight'
       experimental:
         type: integer
         format: int32
