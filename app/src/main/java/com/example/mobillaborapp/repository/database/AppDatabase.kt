@@ -10,5 +10,4 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun breedDao(): BreedDAO
     abstract fun shortImageDao(): ShortImageDAO
     abstract fun categoryDao(): CategoryDAO
-    abstract fun weightDao(): WeightDAO
 }

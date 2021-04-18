@@ -51,10 +51,6 @@ data class Breed (
         @SerializedName("origin")
         var origin: String? = null,
 
-        @ColumnInfo(name = "weight")
-        @SerializedName("weight")
-        var weight: Weight? = null,
-
         @ColumnInfo(name = "experimental")
         @SerializedName("experimental")
         var experimental: Int? = null,
