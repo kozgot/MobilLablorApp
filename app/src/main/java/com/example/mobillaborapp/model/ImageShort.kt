@@ -1,17 +1,25 @@
 package com.example.mobillaborapp.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-class ImageShort {
-    @SerializedName("id")
-    var id: String? = null
+@Entity(tableName = "shortimage")
+data class ImageShort (
+        @PrimaryKey
+        @SerializedName("id")
+        var id: String? = null,
 
-    @SerializedName("url")
-    var url: String? = null
+        @ColumnInfo(name = "url")
+        @SerializedName("url")
+        var url: String? = null,
 
-    @SerializedName("width")
-    var width: Int? = null
+        @ColumnInfo(name = "width")
+        @SerializedName("width")
+        var width: Int? = null,
 
-    @SerializedName("height")
-    var height: Int? = null
-}
+        @ColumnInfo(name = "height")
+        @SerializedName("height")
+        var height: Int? = null
+)
