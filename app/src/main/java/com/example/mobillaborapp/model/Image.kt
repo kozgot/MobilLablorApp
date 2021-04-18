@@ -1,13 +1,15 @@
 package com.example.mobillaborapp.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "image")
+@Entity(tableName = "image", foreignKeys = [ForeignKey(
+        entity = Breed::class,
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("breedid"),
+        onDelete = ForeignKey.CASCADE)])
 data class Image(
-        @ColumnInfo(name = "breeds")
+        @Ignore
         @SerializedName("breeds")
         var breeds: List<Breed> = ArrayList<Breed>(),
 
@@ -39,7 +41,7 @@ data class Image(
         @SerializedName("original_filename")
         var originalFilename: String? = null,
 
-        @ColumnInfo(name = "breedids")
+        @ColumnInfo(name = "breedid")
         @SerializedName("breed_ids")
         var breedIds: String? = null
 )
