@@ -5,6 +5,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mobillaborapp.R
 import com.example.mobillaborapp.injector
@@ -27,7 +28,7 @@ class ScrollingActivity : AppCompatActivity(), PicListScreen{
         injector.inject(this)
         setContentView(R.layout.activity_scrolling)
         setSupportActionBar(findViewById(R.id.toolbar))
-        findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
+        findViewById<Toolbar>(R.id.toolbar).title = title
         /*
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
             navigateToAddImage()
