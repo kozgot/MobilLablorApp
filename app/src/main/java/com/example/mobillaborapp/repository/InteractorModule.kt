@@ -10,5 +10,5 @@ import javax.inject.Singleton
 class InteractorModule {
     @Provides
     @Singleton
-    fun provideNetworkInteractor(catImagesApi: CatAPI) = NetworkInteractor(catImagesApi)
+    fun provideNetworkInteractor(catAPI: CatAPI) = NetworkInteractor(catAPI)
 }

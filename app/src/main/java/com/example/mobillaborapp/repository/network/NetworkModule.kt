@@ -20,7 +20,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideArtistsApi(client: OkHttpClient): CatAPI {
+    fun provideCatAPI(client: OkHttpClient): CatAPI {
         val retrofit = Retrofit.Builder()
             .client(client)
             .baseUrl(NetworkConfig.API_ENDPOINT_ADDRESS)

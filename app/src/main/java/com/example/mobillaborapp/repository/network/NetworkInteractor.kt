@@ -9,12 +9,12 @@ import javax.inject.Inject
 
 const val XApiKey = "16d40230-356f-4ee1-83ab-b3b9189b52f4"
 
-class NetworkInteractor @Inject constructor(private var catsApi: CatAPI) {
-    fun getOwnImages(page: Int?) {
+class NetworkInteractor @Inject constructor(private var catApi: CatAPI) {
+    fun getOwnImages() {
         val event = GetCatImagesEvent()
         try {
             val catImagesQueryCall =
-                catsApi.listOwnImages(XApiKey, 3, page)
+                catApi.listOwnImages(XApiKey, 10, 1)
 
             val response = catImagesQueryCall.execute()
             Log.d("Response", response.body().toString())
@@ -34,7 +34,7 @@ class NetworkInteractor @Inject constructor(private var catsApi: CatAPI) {
         val event = GetPublicCatImagesEvent()
         try {
             val catImagesQueryCall =
-                    catsApi.listPublicImages(XApiKey, 3, page)
+                    catApi.listPublicImages(XApiKey, 3, page)
 
             val response = catImagesQueryCall.execute()
             Log.d("Response", response.body().toString())
@@ -54,7 +54,7 @@ class NetworkInteractor @Inject constructor(private var catsApi: CatAPI) {
         val event = GetBreedsEvent()
         try {
             val catBreedsQueryCall =
-                    catsApi.listBreeds(XApiKey)
+                    catApi.listBreeds(XApiKey)
 
             val response = catBreedsQueryCall.execute()
             Log.d("Response", response.body().toString())
@@ -74,7 +74,7 @@ class NetworkInteractor @Inject constructor(private var catsApi: CatAPI) {
         val event = GetImageEvent()
         try {
             val catImageQueryCall =
-                    catsApi.getImage(id, XApiKey)
+                    catApi.getImage(id, XApiKey)
 
             val response = catImageQueryCall.execute()
             Log.d("Response", response.body().toString())
@@ -94,7 +94,7 @@ class NetworkInteractor @Inject constructor(private var catsApi: CatAPI) {
         val event = DeleteImageEvent()
         try {
             val deleteImageQueryCall =
-                    catsApi.getImage(id, XApiKey)
+                    catApi.getImage(id, XApiKey)
 
             val response = deleteImageQueryCall.execute()
             Log.d("Response", response.body().toString())
@@ -113,7 +113,7 @@ class NetworkInteractor @Inject constructor(private var catsApi: CatAPI) {
         val event = UploadImageEvent()
         try {
             val uploadImageQueryCall =
-                    catsApi.uploadImage(requestBody, XApiKey, breedId)
+                    catApi.uploadImage(requestBody, XApiKey, breedId)
 
             val response = uploadImageQueryCall.execute()
             Log.d("Response", response.body().toString())
