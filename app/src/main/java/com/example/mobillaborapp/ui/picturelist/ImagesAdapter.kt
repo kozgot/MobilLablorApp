@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mobillaborapp.R
 import com.example.mobillaborapp.model.Image
+import com.example.mobillaborapp.ui.picturedetails.PictureDetailsActivity
 import kotlinx.android.synthetic.main.card_image.view.*
 
 class ImagesAdapter constructor(
@@ -30,14 +31,11 @@ class ImagesAdapter constructor(
         // todo other properties to show
         holder.tvName.text = image.id
 
-        // todo
-        /*
         holder.cardView.setOnClickListener {
-            val intent = Intent(context, WeatherDetailsActivity::class.java)
-            intent.putExtra("CITY_NAME", city.cityname)
+            val intent = Intent(context, PictureDetailsActivity::class.java)
+            intent.putExtra("IMAGE_ID", image.id)
             context.startActivity(intent)
         }
-         */
     }
 
     override fun getItemCount() = images.size
@@ -45,5 +43,6 @@ class ImagesAdapter constructor(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var ivImage: ImageView = view.ivImage
         var tvName: TextView = view.tvName
+        val cardView = view.cardView
     }
 }

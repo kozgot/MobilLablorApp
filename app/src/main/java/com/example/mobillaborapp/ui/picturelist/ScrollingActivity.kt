@@ -1,5 +1,6 @@
 package com.example.mobillaborapp.ui.picturelist
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mobillaborapp.R
 import com.example.mobillaborapp.injector
 import com.example.mobillaborapp.model.Image
+import com.example.mobillaborapp.ui.addpicture.AddPictureActivity
+import com.example.mobillaborapp.ui.picturedetails.PictureDetailsActivity
 import com.example.mobillaborapp.ui.utils.show
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.content_scrolling.*
 import javax.inject.Inject
 
@@ -29,29 +33,12 @@ class ScrollingActivity : AppCompatActivity(), PicListScreen{
         setContentView(R.layout.activity_scrolling)
         setSupportActionBar(findViewById(R.id.toolbar))
         findViewById<Toolbar>(R.id.toolbar).title = title
-        /*
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            navigateToAddImage()
+            val intent = Intent(this, AddPictureActivity::class.java)
+            // intent.putExtra("PIC_ID", city.cityname)
+            this.startActivity(intent)
         }
-         */
         initRecyclerView()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_scrolling, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     override fun onStart() {
