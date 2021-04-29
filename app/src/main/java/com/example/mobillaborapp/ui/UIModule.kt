@@ -7,6 +7,8 @@ import com.example.mobillaborapp.ui.picturedetails.PictureDetailsPresenter
 import com.example.mobillaborapp.ui.picturelist.PicListPresenter
 import dagger.Module
 import dagger.Provides
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 import javax.inject.Singleton
 
 @Module
@@ -17,7 +19,7 @@ class UIModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun listPresenter(networkInteractor: NetworkInteractor) = PicListPresenter(networkInteractor)
+    fun listPresenter(executor: Executor, networkInteractor: NetworkInteractor) = PicListPresenter(executor, networkInteractor)
 
     @Provides
     @Singleton
@@ -27,4 +29,8 @@ class UIModule(private val context: Context) {
     @Provides
     @Singleton
     fun addPicturePresenter(networkInteractor: NetworkInteractor) = AddPicturePresenter(networkInteractor)
+
+    @Provides
+    @Singleton
+    fun networkExecutor(): Executor = Executors.newFixedThreadPool(1)
 }
