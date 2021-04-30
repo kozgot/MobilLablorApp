@@ -4,6 +4,7 @@ import com.example.mobillaborapp.model.Breed
 import com.example.mobillaborapp.model.Image
 import com.example.mobillaborapp.model.UploadResponse
 import com.example.mobillaborapp.repository.network.CatAPI
+import okhttp3.MultipartBody
 import okhttp3.Request
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -148,7 +149,7 @@ class MockCatAPI : CatAPI {
         return call
     }
 
-    override fun uploadImage(file: RequestBody, xApiKey: String, breedIds: String?): Call<UploadResponse> {
+    override fun uploadImage(file: MultipartBody.Part, xApiKey: String, breedIds: RequestBody?): Call<UploadResponse> {
         val response = UploadResponse()
         response.approved = 1
         response.height = 600
