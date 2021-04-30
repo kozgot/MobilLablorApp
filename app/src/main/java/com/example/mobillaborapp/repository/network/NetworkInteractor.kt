@@ -3,6 +3,7 @@ package com.example.mobillaborapp.repository.network
 
 import android.util.Log
 import com.example.mobillaborapp.events.*
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
@@ -109,7 +110,7 @@ class NetworkInteractor @Inject constructor(private var catApi: CatAPI) {
         }
     }
 
-    fun uploadImage(requestBody: RequestBody, breedId: String) {
+    fun uploadImage(requestBody: RequestBody, breedId: RequestBody) {
         val event = UploadImageEvent()
         try {
             val uploadImageQueryCall =
