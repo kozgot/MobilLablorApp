@@ -15,7 +15,7 @@ class NetworkInteractor @Inject constructor(private var catApi: CatAPI) {
         val event = GetCatImagesEvent()
         try {
             val catImagesQueryCall =
-                catApi.listOwnImages(XApiKey, 10, 1)
+                catApi.listOwnImages(XApiKey, 50, 0)
 
             val response = catImagesQueryCall.execute()
             Log.d("Response", response.body().toString())
@@ -110,7 +110,7 @@ class NetworkInteractor @Inject constructor(private var catApi: CatAPI) {
         }
     }
 
-    fun uploadImage(requestBody: RequestBody, breedId: RequestBody) {
+    fun uploadImage(requestBody: MultipartBody.Part, breedId: RequestBody) {
         val event = UploadImageEvent()
         try {
             val uploadImageQueryCall =
@@ -118,8 +118,8 @@ class NetworkInteractor @Inject constructor(private var catApi: CatAPI) {
 
             val response = uploadImageQueryCall.execute()
             Log.d("Response", response.body().toString())
-            if (response.code() != 200) {
-                throw Exception("Result code is not 200")
+            if (response.code() != 201) {
+                throw Exception("Result code is not 201")
             }
             event.code = response.code()
             event.result = response.body()

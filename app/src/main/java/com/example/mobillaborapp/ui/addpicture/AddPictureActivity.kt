@@ -6,27 +6,28 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import com.example.mobillaborapp.R
 import com.example.mobillaborapp.injector
-import com.example.mobillaborapp.model.UploadRequestBody
+import com.example.mobillaborapp.ui.picturelist.ScrollingActivity
 import com.example.mobillaborapp.ui.utils.getFileName
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_add_picture.*
-import okhttp3.MediaType
-import okhttp3.RequestBody
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import javax.inject.Inject
 
-class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, UploadRequestBody.UploadCallback,
+class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
     AddPictureScreen {
     @Inject
     lateinit var addPicturePresenter: AddPicturePresenter
-
+    private lateinit var fileToUpload:File
+    private lateinit var selectedFile:Uri
     var languages = arrayOf("Java", "PHP", "Kotlin", "Javascript", "Python", "Swift")
 
     // image picker
@@ -106,6 +107,22 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             imageUri = data?.data
             imageView.setImageURI(imageUri)
+            selectedFile = data?.data!!
+            val input = contentResolver.openInputStream(selectedFile)
+            fileToUpload=File.createTempFile("temp", ".jpg")
+            val out = FileOutputStream(fileToUpload)
+            val buf = ByteArray(1024)
+            if (input != null) {
+                var len= input.read(buf)
+                while (len>0) {
+                    out.write(buf, 0, len)
+                    len=input.read(buf)
+
+                }
+                input!!.close()
+            }
+            out.close()
+            Log.i("file" , fileToUpload.length().toString())
         }
     }
 
@@ -115,25 +132,23 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             showToast(message = "Select an image first!")
             return
         }
-
+        progress_bar.progress = 0
         var parcelFileDescriptor = contentResolver.openFileDescriptor(imageUri!!, "r", null) ?: return
         var inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
         var file = File(cacheDir, contentResolver.getFileName(imageUri!!))
         var outputStream = FileOutputStream(file)
         inputStream.copyTo(outputStream)
 
-        progress_bar.progress = 0
-        // val body = UploadRequestBody(file, "image", this)
-
+        progress_bar.progress = 90
         // todo breed id
-        addPicturePresenter.uploadImage(file, "sibe", file.name)
+        addPicturePresenter.uploadImage(file, "sibe")
     }
 
-    override fun onProgressUpdate(percentage: Int) {
-        progress_bar.progress = percentage
-    }
+    override fun showResponse(response: String) {
+        progress_bar.progress = 100
 
-    override fun setUploadProgress(progress: Int) {
-        progress_bar.progress = progress
+        val intent = Intent(this, ScrollingActivity::class.java)
+        this.startActivity(intent)
+        showToast(message = response)
     }
 }

@@ -27,20 +27,15 @@ class AddPicturePresenter @Inject constructor(
         super.detachScreen()
     }
 
-    fun uploadImage(file: File, breedId: String, fileName: String) {
-        //val filePart = MultipartBody.Part.createFormData(
-          //  "file", file.name, RequestBody.create(
-            //    MediaType.parse("image/*"), file
-            //)
-       // )
-        //val imageFormData = MultipartBody.Part.createFormData("file", fileName, body)
-        val fbody = RequestBody.create(
-            MediaType.parse("image/*"),
-            file
+    fun uploadImage(fileToUpload: File, breedId: String) {
+        val requestFile = RequestBody.create(
+            MediaType.parse("image/jpeg"),
+            fileToUpload
         )
+        val body = MultipartBody.Part.createFormData( "file", fileToUpload.name, requestFile)
         val breedRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), breedId)
         executor.execute {
-            networkInteractor.uploadImage(fbody, breedRequestBody)
+            networkInteractor.uploadImage(body, breedRequestBody)
         }
     }
 
@@ -49,14 +44,12 @@ class AddPicturePresenter @Inject constructor(
         if (event.throwable != null) {
             event.throwable?.printStackTrace()
             if (screen != null) {
-                // todo handle error
-                //screen?.showNetworkError(event.throwable?.message.orEmpty())
+                screen?.showResponse(event.throwable?.message.orEmpty())
             }
         } else {
             if (screen != null) {
                 if (event.result != null) {
-                    // todo: check the response code
-                    screen?.setUploadProgress(100)
+                    screen?.showResponse("Image uploaded successfully!")
                 }
             }
         }

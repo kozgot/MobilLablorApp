@@ -61,7 +61,7 @@ interface CatAPI {
     @Multipart
     @POST("images/upload")
     fun uploadImage(
-        @Part("file\"; filename=\"file\"") file: RequestBody,
+        @Part file: MultipartBody.Part,
         @Header("x-api-key") xApiKey: String,
         @Part("breed_ids") breedIds: RequestBody?
     ): Call<UploadResponse>

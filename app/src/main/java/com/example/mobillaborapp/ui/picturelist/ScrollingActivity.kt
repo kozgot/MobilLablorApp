@@ -13,6 +13,7 @@ import com.example.mobillaborapp.injector
 import com.example.mobillaborapp.model.Image
 import com.example.mobillaborapp.ui.addpicture.AddPictureActivity
 import com.example.mobillaborapp.ui.picturedetails.PictureDetailsActivity
+import com.example.mobillaborapp.ui.utils.hide
 import com.example.mobillaborapp.ui.utils.show
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.content_scrolling.*
@@ -33,9 +34,8 @@ class ScrollingActivity : AppCompatActivity(), PicListScreen{
         setContentView(R.layout.activity_scrolling)
         setSupportActionBar(findViewById(R.id.toolbar))
         findViewById<Toolbar>(R.id.toolbar).title = title
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             val intent = Intent(this, AddPictureActivity::class.java)
-            // intent.putExtra("PIC_ID", city.cityname)
             this.startActivity(intent)
         }
         initRecyclerView()
