@@ -23,7 +23,7 @@ class UIModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun pictureDetailsPresenter(networkInteractor: NetworkInteractor) = PictureDetailsPresenter(networkInteractor)
+    fun pictureDetailsPresenter(executor: Executor, networkInteractor: NetworkInteractor) = PictureDetailsPresenter(executor, networkInteractor)
 
 
     @Provides
