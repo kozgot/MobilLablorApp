@@ -15,7 +15,6 @@ import com.example.mobillaborapp.R
 import com.example.mobillaborapp.injector
 import com.example.mobillaborapp.ui.picturelist.ScrollingActivity
 import com.example.mobillaborapp.ui.utils.getFileName
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_add_picture.*
 import java.io.File
 import java.io.FileInputStream
@@ -32,7 +31,6 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
     // image picker
     lateinit var imageView: ImageView
-    lateinit var button: Button
     lateinit var uploadButton: Button
     private var imageUri: Uri? = null
 
@@ -61,8 +59,7 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         //image picker
         title = "Add new cat pic"
         imageView = findViewById(R.id.imageView)
-        button = findViewById(R.id.buttonLoadPicture)
-        button.setOnClickListener {
+        imageView.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, REQUEST_CODE)
