@@ -1,5 +1,6 @@
 package com.example.mobillaborapp.ui.addpicture
 
+import com.example.mobillaborapp.events.GetBreedsEvent
 import com.example.mobillaborapp.events.UploadImageEvent
 import com.example.mobillaborapp.repository.network.NetworkInteractor
 import com.example.mobillaborapp.ui.Presenter
@@ -39,6 +40,13 @@ class AddPicturePresenter @Inject constructor(
         }
     }
 
+
+    fun getBreedsFromAPI() {
+        executor.execute {
+            networkInteractor.getBreeds()
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: UploadImageEvent) {
         if (event.throwable != null) {
@@ -50,6 +58,22 @@ class AddPicturePresenter @Inject constructor(
             if (screen != null) {
                 if (event.result != null) {
                     screen?.showResponse("Image uploaded successfully!")
+                }
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventMainThread2(event: GetBreedsEvent) {
+        if (event.throwable != null) {
+            event.throwable?.printStackTrace()
+            if (screen != null) {
+                screen?.showResponse(event.throwable?.message.orEmpty())
+            }
+        } else {
+            if (screen != null) {
+                if (event.breeds != null) {
+                    screen?.showBreeds(event.breeds!!)
                 }
             }
         }

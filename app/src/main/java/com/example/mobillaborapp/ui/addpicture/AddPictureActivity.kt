@@ -13,6 +13,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import com.example.mobillaborapp.R
 import com.example.mobillaborapp.injector
+import com.example.mobillaborapp.model.Breed
 import com.example.mobillaborapp.ui.picturelist.ScrollingActivity
 import com.example.mobillaborapp.ui.utils.getFileName
 import kotlinx.android.synthetic.main.activity_add_picture.*
@@ -27,7 +28,10 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     lateinit var addPicturePresenter: AddPicturePresenter
     private lateinit var fileToUpload:File
     private lateinit var selectedFile:Uri
-    var languages = arrayOf("Java", "PHP", "Kotlin", "Javascript", "Python", "Swift")
+    private var selectedBreedId: String? = null
+
+    private var allBreeds = mutableListOf<Breed>()
+    private var allBreedNames = mutableListOf<String>()
 
     // image picker
     lateinit var imageView: ImageView
@@ -42,19 +46,8 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         setContentView(R.layout.activity_add_picture)
         injector.inject(this)
 
-        // breed selector
-        var aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, languages)
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        with(mySpinner)
-        {
-            adapter = aa
-            setSelection(0, false)
-            onItemSelectedListener = this@AddPictureActivity
-            prompt = "Select a breed"
-            gravity = Gravity.CENTER
-
-        }
+        // populate breed selector
+        loadBreeds()
 
         //image picker
         title = "Add new cat pic"
@@ -86,13 +79,7 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
-        when (view?.id) {
-            1 -> showToast(message = "Spinner 2 Position:${position} and language: ${languages[position]}")
-            else -> {
-                showToast(message = "Spinner 1 Position:${position} and language: ${languages[position]}")
-            }
-        }
+        selectedBreedId = allBreeds[position].id!!
     }
 
     private fun showToast(context: Context = applicationContext, message: String, duration: Int = Toast.LENGTH_LONG) {
@@ -129,6 +116,12 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             showToast(message = "Select an image first!")
             return
         }
+
+        if (selectedBreedId == null) {
+            showToast(message = "Select a breed first!")
+            return
+        }
+
         progress_bar.progress = 0
         var parcelFileDescriptor = contentResolver.openFileDescriptor(imageUri!!, "r", null) ?: return
         var inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
@@ -136,9 +129,9 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         var outputStream = FileOutputStream(file)
         inputStream.copyTo(outputStream)
 
-        progress_bar.progress = 90
-        // todo breed id
-        addPicturePresenter.uploadImage(file, "sibe")
+        // todo better progress update
+        progress_bar.progress = 80
+        addPicturePresenter.uploadImage(file, selectedBreedId!!)
     }
 
     override fun showResponse(response: String) {
@@ -147,5 +140,31 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         val intent = Intent(this, ScrollingActivity::class.java)
         this.startActivity(intent)
         showToast(message = response)
+    }
+
+    private fun loadBreeds(){
+        addPicturePresenter.getBreedsFromAPI()
+    }
+
+    override fun showBreeds(breeds: List<Breed>) {
+        allBreeds.clear()
+        allBreeds.addAll(breeds)
+        allBreedNames.addAll(breeds.map { it.name!! })
+
+        selectedBreedId = breeds[0].id!!
+
+        // breed selector
+        var aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, allBreedNames)
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        with(mySpinner)
+        {
+            adapter = aa
+            setSelection(0, false)
+            onItemSelectedListener = this@AddPictureActivity
+            prompt = "Select a breed"
+            gravity = Gravity.CENTER
+
+        }
     }
 }
