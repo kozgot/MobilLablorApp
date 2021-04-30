@@ -3,6 +3,7 @@ import com.example.mobillaborapp.repository.InteractorModule
 import com.example.mobillaborapp.repository.network.NetworkModule
 import com.example.mobillaborapp.ui.UIModule
 import com.example.mobillaborapp.ui.addpicture.AddPictureActivity
+import com.example.mobillaborapp.ui.picturedetails.PictureDetailsActivity
 import com.example.mobillaborapp.ui.picturelist.ScrollingActivity
 import dagger.Component
 import javax.inject.Singleton
@@ -12,4 +13,5 @@ import javax.inject.Singleton
 interface MobilLaborAppApplicationComponent {
     fun inject(scrollingActivity: ScrollingActivity)
     fun inject(addPictureActivity: AddPictureActivity)
+    fun inject(pictureDetailsActivity: PictureDetailsActivity)
 }

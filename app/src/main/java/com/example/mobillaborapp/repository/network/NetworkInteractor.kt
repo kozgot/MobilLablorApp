@@ -95,12 +95,12 @@ class NetworkInteractor @Inject constructor(private var catApi: CatAPI) {
         val event = DeleteImageEvent()
         try {
             val deleteImageQueryCall =
-                    catApi.getImage(id, XApiKey)
+                    catApi.deleteImage(id, XApiKey)
 
             val response = deleteImageQueryCall.execute()
             Log.d("Response", response.body().toString())
-            if (response.code() != 200) {
-                throw Exception("Result code is not 200")
+            if (response.code() != 204) {
+                throw Exception("Result code is not 204" + response.code())
             }
             event.code = response.code()
             EventBus.getDefault().post(event)
