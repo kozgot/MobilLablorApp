@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mobillaborapp.R
 import com.example.mobillaborapp.injector
+import com.example.mobillaborapp.model.Breed
 import com.example.mobillaborapp.model.Image
 import com.example.mobillaborapp.ui.addpicture.AddPictureActivity
 import com.example.mobillaborapp.ui.picturedetails.PictureDetailsActivity
@@ -17,6 +19,8 @@ import com.example.mobillaborapp.ui.utils.hide
 import com.example.mobillaborapp.ui.utils.show
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.content_scrolling.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ScrollingActivity : AppCompatActivity(), PicListScreen{
@@ -54,6 +58,7 @@ class ScrollingActivity : AppCompatActivity(), PicListScreen{
     override fun onResume() {
         super.onResume()
         listPresenter.queryImages()
+        //listPresenter.queryBreeds()
     }
 
     private fun initRecyclerView() {
@@ -70,6 +75,12 @@ class ScrollingActivity : AppCompatActivity(), PicListScreen{
             displayedImages.addAll(images)
             imagesAdapter?.notifyDataSetChanged()
             cat_pic_list_view.show()
+        }
+    }
+
+    override fun breedsDownLoaded(breeds: List<Breed>?) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            listPresenter.saveBreeds(breeds!!)
         }
     }
 }

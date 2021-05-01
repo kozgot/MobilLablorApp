@@ -7,16 +7,23 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class DatabaseModule {
+class DatabaseModule(private val context: Context) {
+    @Provides
+    fun context() = context
+
     @Provides
     @Singleton
-    fun provideCatsDb(context: Context): AppDatabase {
-        return Room.databaseBuilder(
-                context.applicationContext,
-                AppDatabase::class.java,
-                "cats_database"
-        )
-                .fallbackToDestructiveMigration()
-                .build()
+    fun providesImageDao(): ImageDAO{
+        return AppDatabase.getInstance(context).imageDao()
     }
+
+    @Provides
+    @Singleton
+    fun providesBreedDao(): BreedDAO{
+        return AppDatabase.getInstance(context).breedDao()
+    }
+
+    @Provides
+    @Singleton
+    fun providesDBInteractor(imageDAO: ImageDAO, breedDAO: BreedDAO) = DBInteractor(imageDAO, breedDAO)
 }
