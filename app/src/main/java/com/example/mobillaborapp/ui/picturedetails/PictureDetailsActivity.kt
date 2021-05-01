@@ -120,6 +120,10 @@ class PictureDetailsActivity : AppCompatActivity(), PictureDetailsScreen {
     }
 
     private fun deleteImage() {
+        if (!isNetworkConnected()) {
+            showToast(message = "No internet, cannot delete in offline mode!")
+            return
+        }
         if (imageId != null) {
             pictureDetailsPresenter.deleteImage(imageId!!)
         }
