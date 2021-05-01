@@ -7,7 +7,7 @@ class Image(
         var breeds: List<Breed> = ArrayList(),
 
         @SerializedName("id")
-        var id: String,
+        var id: String? = null,
 
         @SerializedName("url")
         var url: String? = null,

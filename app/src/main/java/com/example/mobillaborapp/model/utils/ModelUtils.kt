@@ -6,7 +6,7 @@ import com.example.mobillaborapp.model.network.Breed
 import com.example.mobillaborapp.model.network.Image
 
 fun Breed.convertToDbBreed(): DbBreed {
-    return DbBreed(null, this.id,  this.name,
+    return DbBreed(null, this.id!!,  this.name,
         this.indoor,  this.description, this.temperament,
         this.lifeSpan, this.altNames, this.wikipediaUrl,
         this.vetstreetUrl, this.origin, this.experimental,
@@ -38,7 +38,7 @@ fun Image.convertToDbImage(): DbImage {
         dbBreed = breed.convertToDbBreed()
     }
 
-    return DbImage(dbBreed, null, this.id, this.url, this.width, this.height, this.subId, this.createdAt, this.originalFilename, this.breedIds)
+    return DbImage(dbBreed, null, this.id!!, this.url, this.width, this.height, this.subId, this.createdAt, this.originalFilename, this.breedIds)
 }
 
 fun convertFromDbImage(dbImage: DbImage) : Image {

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 class Breed (
         @SerializedName("id")
-        var id: String,
+        var id: String? = null,
 
         @SerializedName("name")
         var name: String? = null,
