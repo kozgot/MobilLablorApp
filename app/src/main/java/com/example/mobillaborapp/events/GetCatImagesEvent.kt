@@ -1,6 +1,6 @@
 package com.example.mobillaborapp.events
 
-import com.example.mobillaborapp.model.Image
+import com.example.mobillaborapp.model.network.Image
 
 data class GetCatImagesEvent(
     var code: Int = 0,

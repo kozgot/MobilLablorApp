@@ -8,12 +8,17 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.mobillaborapp.R
 import com.example.mobillaborapp.injector
-import com.example.mobillaborapp.model.Image
+import com.example.mobillaborapp.model.network.Breed
+import com.example.mobillaborapp.model.network.Image
 import com.example.mobillaborapp.ui.picturelist.ScrollingActivity
 import kotlinx.android.synthetic.main.details_content.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 

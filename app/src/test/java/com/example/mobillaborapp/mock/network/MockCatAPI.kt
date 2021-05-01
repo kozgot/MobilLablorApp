@@ -1,8 +1,8 @@
 package com.example.mobillaborapp.mock.network
 
-import com.example.mobillaborapp.model.Breed
-import com.example.mobillaborapp.model.Image
-import com.example.mobillaborapp.model.UploadResponse
+import com.example.mobillaborapp.model.network.Breed
+import com.example.mobillaborapp.model.network.Image
+import com.example.mobillaborapp.model.network.UploadResponse
 import com.example.mobillaborapp.repository.network.CatAPI
 import okhttp3.MultipartBody
 import okhttp3.Request

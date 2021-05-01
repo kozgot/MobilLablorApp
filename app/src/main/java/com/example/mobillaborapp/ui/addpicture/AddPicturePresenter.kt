@@ -2,6 +2,8 @@ package com.example.mobillaborapp.ui.addpicture
 
 import com.example.mobillaborapp.events.GetBreedsEvent
 import com.example.mobillaborapp.events.UploadImageEvent
+import com.example.mobillaborapp.model.database.DbBreed
+import com.example.mobillaborapp.repository.database.DBInteractor
 import com.example.mobillaborapp.repository.network.NetworkInteractor
 import com.example.mobillaborapp.ui.Presenter
 import okhttp3.MediaType
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 class AddPicturePresenter @Inject constructor(
     private val executor: Executor,
-    private val networkInteractor: NetworkInteractor
+    private val networkInteractor: NetworkInteractor,
+    private val dbInteractor: DBInteractor
 ): Presenter<AddPictureScreen>() {
     override fun attachScreen(screen: AddPictureScreen) {
         super.attachScreen(screen)
@@ -40,11 +43,14 @@ class AddPicturePresenter @Inject constructor(
         }
     }
 
-
     fun getBreedsFromAPI() {
         executor.execute {
             networkInteractor.getBreeds()
         }
+    }
+
+    suspend fun queryBreedsFromDb(): List<DbBreed> {
+        return dbInteractor.getBreeds()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

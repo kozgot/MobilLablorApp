@@ -1,7 +1,7 @@
 package com.example.mobillaborapp.repository.database
 
-import com.example.mobillaborapp.model.Breed
-import com.example.mobillaborapp.model.Image
+import com.example.mobillaborapp.model.database.DbBreed
+import com.example.mobillaborapp.model.database.DbImage
 import javax.inject.Inject
 
 class DBInteractor @Inject constructor(private var imageDAO: ImageDAO, private var breedDAO: BreedDAO) {
@@ -11,19 +11,19 @@ class DBInteractor @Inject constructor(private var imageDAO: ImageDAO, private v
 
     suspend fun getBreeds() = breedDAO.getAllBreeds()
 
-    suspend fun insertImage(image: Image) {
+    suspend fun insertImage(image: DbImage) {
         imageDAO.insertImage(image)
     }
 
-    suspend fun insertBreed(breed: Breed){
+    suspend fun insertBreed(breed: DbBreed){
         breedDAO.insertBreed(breed)
     }
 
-    suspend fun deteleBreed(breed: Breed){
+    suspend fun deteleBreed(breed: DbBreed){
         breedDAO.deleteBreed(breed)
     }
 
-    suspend fun deleteImage(image: Image){
+    suspend fun deleteImage(image: DbImage){
         imageDAO.deleteImage(image)
     }
 }

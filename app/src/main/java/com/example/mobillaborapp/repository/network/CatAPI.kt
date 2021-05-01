@@ -1,8 +1,8 @@
 package com.example.mobillaborapp.repository.network
 
-import com.example.mobillaborapp.model.Breed
-import com.example.mobillaborapp.model.Image
-import com.example.mobillaborapp.model.UploadResponse
+import com.example.mobillaborapp.model.network.Breed
+import com.example.mobillaborapp.model.network.Image
+import com.example.mobillaborapp.model.network.UploadResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call

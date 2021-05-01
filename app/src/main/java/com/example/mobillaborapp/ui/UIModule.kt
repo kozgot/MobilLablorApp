@@ -20,7 +20,7 @@ class UIModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun listPresenter(executor: Executor, networkInteractor: NetworkInteractor, dbInteractor: DBInteractor) = PicListPresenter(executor, networkInteractor)
+    fun listPresenter(executor: Executor, networkInteractor: NetworkInteractor, dbInteractor: DBInteractor) = PicListPresenter(executor, networkInteractor, dbInteractor)
 
     @Provides
     @Singleton
@@ -29,7 +29,7 @@ class UIModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun addPicturePresenter(executor: Executor, networkInteractor: NetworkInteractor) = AddPicturePresenter(executor, networkInteractor)
+    fun addPicturePresenter(executor: Executor, networkInteractor: NetworkInteractor, dbInteractor: DBInteractor) = AddPicturePresenter(executor, networkInteractor, dbInteractor)
 
     @Provides
     @Singleton

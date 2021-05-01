@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.mobillaborapp.model.Breed
-import com.example.mobillaborapp.model.Image
+import com.example.mobillaborapp.model.database.DbBreed
+import com.example.mobillaborapp.model.database.DbImage
 
-@Database(entities = [Image::class, Breed::class], version = 1)
+@Database(entities = [DbImage::class, DbBreed::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun imageDao(): ImageDAO
     abstract fun breedDao(): BreedDAO

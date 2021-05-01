@@ -11,12 +11,18 @@ import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.lifecycleScope
 import com.example.mobillaborapp.R
 import com.example.mobillaborapp.injector
-import com.example.mobillaborapp.model.Breed
+import com.example.mobillaborapp.model.database.DbBreed
+import com.example.mobillaborapp.model.network.Breed
+import com.example.mobillaborapp.model.utils.convertFromDbBreed
 import com.example.mobillaborapp.ui.picturelist.ScrollingActivity
 import com.example.mobillaborapp.ui.utils.getFileName
 import kotlinx.android.synthetic.main.activity_add_picture.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -47,7 +53,7 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         injector.inject(this)
 
         // populate breed selector
-        loadBreeds()
+        getBreeds()
 
         //image picker
         title = "Add new cat pic"
@@ -136,21 +142,40 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
     override fun showResponse(response: String) {
         progress_bar.progress = 100
-
         val intent = Intent(this, ScrollingActivity::class.java)
         this.startActivity(intent)
         showToast(message = response)
     }
 
-    private fun loadBreeds(){
+    private fun loadBreedsFromAPI(){
         addPicturePresenter.getBreedsFromAPI()
     }
 
-    override fun showBreeds(breeds: List<Breed>) {
+    private fun getBreeds() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            val list: List<DbBreed> =
+                lifecycleScope.async(Dispatchers.IO) {
+                    addPicturePresenter.queryBreedsFromDb()
+                }.await()
+
+            if (list.isNotEmpty()) {
+                var breedList = mutableListOf<Breed>()
+                list.forEach{
+                    breedList.add(convertFromDbBreed(it))
+                }
+                populateBreedSelector(breedList)
+            }
+            else {
+                // if the db is empty
+                loadBreedsFromAPI()
+            }
+        }
+    }
+
+    private fun populateBreedSelector(breeds: List<Breed>) {
         allBreeds.clear()
         allBreeds.addAll(breeds)
         allBreedNames.addAll(breeds.map { it.name!! })
-
         selectedBreedId = breeds[0].id!!
 
         // breed selector
@@ -166,5 +191,9 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             gravity = Gravity.CENTER
 
         }
+    }
+
+    override fun showBreeds(breeds: List<Breed>) {
+        populateBreedSelector(breeds)
     }
 }
