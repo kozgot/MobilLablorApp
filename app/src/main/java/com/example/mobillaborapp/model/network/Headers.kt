@@ -1,4 +1,4 @@
-package com.example.mobillaborapp.model
+package com.example.mobillaborapp.model.network
 
 import com.google.gson.annotations.SerializedName
 

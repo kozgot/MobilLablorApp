@@ -1,23 +1,30 @@
 package com.example.mobillaborapp.ui.picturelist
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
-import com.google.android.material.appbar.CollapsingToolbarLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mobillaborapp.R
 import com.example.mobillaborapp.injector
-import com.example.mobillaborapp.model.Image
+import com.example.mobillaborapp.model.database.DbImage
+import com.example.mobillaborapp.model.network.Breed
+import com.example.mobillaborapp.model.network.Image
+import com.example.mobillaborapp.model.utils.convertFromDbBreed
+import com.example.mobillaborapp.model.utils.convertFromDbImage
 import com.example.mobillaborapp.ui.addpicture.AddPictureActivity
-import com.example.mobillaborapp.ui.picturedetails.PictureDetailsActivity
-import com.example.mobillaborapp.ui.utils.hide
 import com.example.mobillaborapp.ui.utils.show
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.content_scrolling.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 class ScrollingActivity : AppCompatActivity(), PicListScreen{
 
@@ -39,6 +46,7 @@ class ScrollingActivity : AppCompatActivity(), PicListScreen{
             this.startActivity(intent)
         }
         initRecyclerView()
+        listPresenter.queryBreeds()
     }
 
     override fun onStart() {
@@ -53,7 +61,14 @@ class ScrollingActivity : AppCompatActivity(), PicListScreen{
 
     override fun onResume() {
         super.onResume()
-        listPresenter.queryImages()
+        if (!isNetworkConnected()) {
+            // try to get Images from the DB
+            loadImagesFromDb()
+            showToast(message = "No internet connection, loading images from DB")
+        }
+        else {
+            listPresenter.loadImagesFromAPI()
+        }
     }
 
     private fun initRecyclerView() {
@@ -71,5 +86,48 @@ class ScrollingActivity : AppCompatActivity(), PicListScreen{
             imagesAdapter?.notifyDataSetChanged()
             cat_pic_list_view.show()
         }
+    }
+
+    override fun breedsDownLoaded(breeds: List<Breed>?) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            listPresenter.saveBreeds(breeds!!)
+        }
+    }
+
+    private fun loadImagesFromDb() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            val list: List<DbImage> =
+                lifecycleScope.async(Dispatchers.IO) {
+                    listPresenter.queryImagesFromDb()
+                }.await()
+
+            if (list.isNotEmpty()) {
+                var imageList = mutableListOf<Image>()
+                list.forEach{
+                    imageList.add(convertFromDbImage(it))
+                }
+                showImages(imageList)
+            }
+            else {
+                showToast(message = "The DB is empty")
+            }
+        }
+    }
+
+    override fun showError(message: String) {
+        showToast(message = message)
+    }
+
+    private fun showToast(
+        context: Context = applicationContext,
+        message: String,
+        duration: Int = Toast.LENGTH_LONG
+    ) {
+        Toast.makeText(context, message, duration).show()
+    }
+
+    private fun isNetworkConnected(): Boolean {
+        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        return cm.activeNetworkInfo != null && cm.activeNetworkInfo!!.isConnected
     }
 }

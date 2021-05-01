@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mobillaborapp.R
-import com.example.mobillaborapp.model.Image
+import com.example.mobillaborapp.model.network.Image
 import com.example.mobillaborapp.ui.picturedetails.PictureDetailsActivity
 import kotlinx.android.synthetic.main.card_image.view.*
 

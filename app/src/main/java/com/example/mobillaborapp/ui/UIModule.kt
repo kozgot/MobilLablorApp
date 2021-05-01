@@ -1,6 +1,7 @@
 package com.example.mobillaborapp.ui
 
 import android.content.Context
+import com.example.mobillaborapp.repository.database.DBInteractor
 import com.example.mobillaborapp.repository.network.NetworkInteractor
 import com.example.mobillaborapp.ui.addpicture.AddPicturePresenter
 import com.example.mobillaborapp.ui.picturedetails.PictureDetailsPresenter
@@ -19,16 +20,16 @@ class UIModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun listPresenter(executor: Executor, networkInteractor: NetworkInteractor) = PicListPresenter(executor, networkInteractor)
+    fun listPresenter(executor: Executor, networkInteractor: NetworkInteractor, dbInteractor: DBInteractor) = PicListPresenter(executor, networkInteractor, dbInteractor)
 
     @Provides
     @Singleton
-    fun pictureDetailsPresenter(executor: Executor, networkInteractor: NetworkInteractor) = PictureDetailsPresenter(executor, networkInteractor)
+    fun pictureDetailsPresenter(executor: Executor, networkInteractor: NetworkInteractor, dbInteractor: DBInteractor) = PictureDetailsPresenter(executor, networkInteractor, dbInteractor)
 
 
     @Provides
     @Singleton
-    fun addPicturePresenter(executor: Executor, networkInteractor: NetworkInteractor) = AddPicturePresenter(executor, networkInteractor)
+    fun addPicturePresenter(executor: Executor, networkInteractor: NetworkInteractor, dbInteractor: DBInteractor) = AddPicturePresenter(executor, networkInteractor, dbInteractor)
 
     @Provides
     @Singleton

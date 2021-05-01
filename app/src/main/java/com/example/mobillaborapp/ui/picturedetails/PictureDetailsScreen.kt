@@ -1,6 +1,6 @@
 package com.example.mobillaborapp.ui.picturedetails
 
-import com.example.mobillaborapp.model.Image
+import com.example.mobillaborapp.model.network.Image
 
 interface PictureDetailsScreen {
     fun showImage(image: Image?)

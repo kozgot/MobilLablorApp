@@ -2,18 +2,28 @@ package com.example.mobillaborapp.ui.picturedetails
 
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.mobillaborapp.R
 import com.example.mobillaborapp.injector
-import com.example.mobillaborapp.model.Image
+import com.example.mobillaborapp.model.database.DbBreed
+import com.example.mobillaborapp.model.database.DbImage
+import com.example.mobillaborapp.model.network.Breed
+import com.example.mobillaborapp.model.network.Image
+import com.example.mobillaborapp.model.utils.convertFromDbBreed
+import com.example.mobillaborapp.model.utils.convertFromDbImage
 import com.example.mobillaborapp.ui.picturelist.ScrollingActivity
 import kotlinx.android.synthetic.main.details_content.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -32,10 +42,34 @@ class PictureDetailsActivity : AppCompatActivity(), PictureDetailsScreen {
         injector.inject(this)
         imageId = intent.getStringExtra("IMAGE_ID")!!
         if (imageId != null) {
-            pictureDetailsPresenter.getImageDetails(imageId!!)
+            getImage(imageId!!)
         }
 
         title = "Picture Details"
+    }
+
+    private fun getImage(id: String) {
+        if(isNetworkConnected()) {
+            pictureDetailsPresenter.getImageDetails(id)
+        }
+        else {
+            showToast(message = "No internet connection, loading details from DB")
+            lifecycleScope.launch(Dispatchers.Main) {
+                val dbImageList: List<DbImage> =
+                    lifecycleScope.async(Dispatchers.IO) {
+                        pictureDetailsPresenter.getImageFromDb(id)
+                    }.await()
+
+                if (dbImageList.isNotEmpty()) {
+                    var imageresult = convertFromDbImage(dbImageList[0])
+                    showImage(imageresult)
+                }
+                else {
+                    showToast(message = "Image not found in DB")
+                }
+            }
+
+        }
     }
 
     var optionsMenu: Menu? = null
@@ -86,8 +120,17 @@ class PictureDetailsActivity : AppCompatActivity(), PictureDetailsScreen {
     }
 
     private fun deleteImage() {
+        if (!isNetworkConnected()) {
+            showToast(message = "No internet, cannot delete in offline mode!")
+            return
+        }
         if (imageId != null) {
             pictureDetailsPresenter.deleteImage(imageId!!)
+        }
+        if (displayedImage != null) {
+            lifecycleScope.launch(Dispatchers.Main) {
+                pictureDetailsPresenter.deleteImageFromDb(displayedImage!!)
+            }
         }
     }
 
@@ -103,5 +146,10 @@ class PictureDetailsActivity : AppCompatActivity(), PictureDetailsScreen {
 
     private fun showToast(context: Context = applicationContext, message: String, duration: Int = Toast.LENGTH_LONG) {
         Toast.makeText(context, message, duration).show()
+    }
+
+    private fun isNetworkConnected(): Boolean {
+        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        return cm.activeNetworkInfo != null && cm.activeNetworkInfo!!.isConnected
     }
 }
