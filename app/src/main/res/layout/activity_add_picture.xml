@@ -24,7 +24,7 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                app:srcCompat="@mipmap/ic_launcher_foreground"
+                app:srcCompat="@mipmap/ic_picture_placeholder_foreground"
                 android:layout_height="300dp"/>
             <TextView
                 android:id="@+id/textView"

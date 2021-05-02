@@ -12,6 +12,7 @@ import org.greenrobot.eventbus.ThreadMode
 import java.util.concurrent.Executor
 import javax.inject.Inject
 import com.example.mobillaborapp.model.network.Breed
+import com.example.mobillaborapp.model.utils.convertFromDbImage
 import com.example.mobillaborapp.model.utils.convertToDbBreed
 import com.example.mobillaborapp.model.utils.convertToDbImage
 import com.example.mobillaborapp.repository.database.DBInteractor
@@ -28,12 +29,8 @@ class PicListPresenter @Inject constructor(
     private val uiContext: CoroutineContext = Dispatchers.Main) : Presenter<PicListScreen>() , CoroutineScope {
 
     private var job: Job = Job()
-
-    // To use Dispatchers.Main (CoroutineDispatcher - runs and schedules coroutines)
-    // in Android add dependency: implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1'
     override val coroutineContext: CoroutineContext
         get() = uiContext + job
-
 
     override fun attachScreen(screen: PicListScreen) {
         super.attachScreen(screen)
@@ -51,7 +48,7 @@ class PicListPresenter @Inject constructor(
         }
     }
 
-    fun queryBreeds() {
+    fun loadBreedsFromAPI() {
         executor.execute {
             networkInteractor.getBreeds()
         }
@@ -63,8 +60,13 @@ class PicListPresenter @Inject constructor(
         }
     }
 
-    suspend fun queryImagesFromDb(): List<DbImage>{
-        return dbInteractor.getImages()
+    suspend fun queryImagesFromDb(): List<Image>{
+        var list = dbInteractor.getImages()
+        var imageList = mutableListOf<Image>()
+        list.forEach{
+            imageList.add(convertFromDbImage(it))
+        }
+        return imageList
     }
 
     suspend fun saveImages(images: List<Image>) {

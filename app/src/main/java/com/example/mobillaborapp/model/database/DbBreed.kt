@@ -3,6 +3,7 @@ package com.example.mobillaborapp.model.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.mobillaborapp.model.network.Breed
 
 @Entity(tableName = "breed")
 data class DbBreed (
@@ -102,4 +103,21 @@ data class DbBreed (
 
         @ColumnInfo(name = "vocalisation")
         var vocalisation: Int? = null
-)
+) {
+        override fun equals(other: Any?): Boolean = (other is DbBreed)
+                && this.breedId == other.breedId && this.originalBreedId == other.originalBreedId
+                && this.name == other.name &&
+                this.indoor == other.indoor && this.description == other.description &&
+                this.temperament == other.temperament &&
+                this.lifeSpan == other.lifeSpan && this.altNames == other.altNames && this.wikipediaUrl == other.wikipediaUrl &&
+                this.vetstreetUrl == other.vetstreetUrl && this.origin == other.origin && this.experimental == other.experimental &&
+                this.hairless == other.hairless && this.natural == other.natural && this.rare == other.rare &&
+                this.rex == other.rex && this.supressTail == other.supressTail &&
+                this.shortLegs == other.shortLegs && this.hypoallergenic == other.hypoallergenic &&
+                this.adaptability == other.adaptability && this.affectionLevel == other.affectionLevel &&
+                this.countryCode == other.countryCode && this.childFriendly == other.childFriendly &&
+                this.dogFriendly == other.dogFriendly && this.energyLevel == other.energyLevel &&
+                this.grooming == other.grooming && this.healthIssues == other.healthIssues &&
+                this.intelligence == other.intelligence && this.sheddingLevel == other.sheddingLevel &&
+                this.socialNeeds == other.socialNeeds &&this.strangerFriendly == other.strangerFriendly&& this.vocalisation == other.vocalisation
+}

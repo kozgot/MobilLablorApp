@@ -4,5 +4,5 @@ import com.example.mobillaborapp.model.network.Breed
 
 interface AddPictureScreen {
     fun showResponse(response: String)
-    fun showBreeds(breeds: List<Breed>)
+    fun showBreeds(breeds: List<Breed>?)
 }

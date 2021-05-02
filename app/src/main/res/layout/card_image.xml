@@ -18,23 +18,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center">
-
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/name"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
             <ImageView
                 android:id="@+id/ivImage"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_margin="10dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_picture_placeholder_foreground" />
         </LinearLayout>
     </LinearLayout>
 

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mobillaborapp.R
@@ -28,9 +27,6 @@ class ImagesAdapter constructor(
         val image = images[position]
         Glide.with(context).load(image.url).into(holder.ivImage)
 
-        // todo other properties to show
-        holder.tvName.text = image.id
-
         holder.cardView.setOnClickListener {
             val intent = Intent(context, PictureDetailsActivity::class.java)
             intent.putExtra("IMAGE_ID", image.id)
@@ -42,7 +38,6 @@ class ImagesAdapter constructor(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var ivImage: ImageView = view.ivImage
-        var tvName: TextView = view.tvName
         val cardView = view.cardView
     }
 }

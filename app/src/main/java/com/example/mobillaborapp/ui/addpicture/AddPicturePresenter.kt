@@ -2,7 +2,8 @@ package com.example.mobillaborapp.ui.addpicture
 
 import com.example.mobillaborapp.events.GetBreedsEvent
 import com.example.mobillaborapp.events.UploadImageEvent
-import com.example.mobillaborapp.model.database.DbBreed
+import com.example.mobillaborapp.model.network.Breed
+import com.example.mobillaborapp.model.utils.convertFromDbBreed
 import com.example.mobillaborapp.repository.database.DBInteractor
 import com.example.mobillaborapp.repository.network.NetworkInteractor
 import com.example.mobillaborapp.ui.Presenter
@@ -49,8 +50,15 @@ class AddPicturePresenter @Inject constructor(
         }
     }
 
-    suspend fun queryBreedsFromDb(): List<DbBreed> {
-        return dbInteractor.getBreeds()
+    suspend fun queryBreedsFromDb(): MutableList<Breed> {
+        var breedList = mutableListOf<Breed>()
+
+        var dbBreeds = dbInteractor.getBreeds()
+        dbBreeds.forEach {
+            breedList.add(convertFromDbBreed(it))
+        }
+
+        return breedList
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
