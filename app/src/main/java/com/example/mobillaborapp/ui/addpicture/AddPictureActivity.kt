@@ -193,7 +193,9 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         }
     }
 
-    override fun showBreeds(breeds: List<Breed>) {
-        populateBreedSelector(breeds)
+    override fun showBreeds(breeds: List<Breed>?) {
+        if (breeds != null) {
+            populateBreedSelector(breeds)
+        }
     }
 }
