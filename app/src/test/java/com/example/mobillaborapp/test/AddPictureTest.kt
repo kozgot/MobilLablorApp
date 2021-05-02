@@ -1,6 +1,5 @@
 package com.example.mobillaborapp.test
 
-import com.example.mobillaborapp.model.database.DbBreed
 import com.example.mobillaborapp.model.network.Breed
 import com.example.mobillaborapp.testInjector
 import com.example.mobillaborapp.ui.addpicture.AddPicturePresenter

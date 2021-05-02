@@ -2,7 +2,6 @@ package com.example.mobillaborapp.ui.picturedetails
 
 import com.example.mobillaborapp.events.DeleteImageEvent
 import com.example.mobillaborapp.events.GetImageEvent
-import com.example.mobillaborapp.model.database.DbImage
 import com.example.mobillaborapp.model.network.Image
 import com.example.mobillaborapp.model.utils.convertFromDbImage
 import com.example.mobillaborapp.model.utils.convertToDbImage
@@ -19,6 +18,7 @@ class PictureDetailsPresenter @Inject constructor(
     private val executor: Executor,
     private val networkInteractor: NetworkInteractor,
     private val dbInteractor: DBInteractor) : Presenter<PictureDetailsScreen>() {
+
     override fun attachScreen(screen: PictureDetailsScreen) {
         super.attachScreen(screen)
         EventBus.getDefault().register(this)
@@ -29,16 +29,18 @@ class PictureDetailsPresenter @Inject constructor(
         super.detachScreen()
     }
 
-    fun getImageDetails(id: String) {
+    fun loadImageFromAPI(id: String) {
         executor.execute {
             networkInteractor.getImageById(id)
         }
     }
 
-    fun deleteImage(id: String) {
+    suspend fun deleteImage(image: Image) {
         executor.execute {
-            networkInteractor.deleteImage(id)
+            networkInteractor.deleteImage(image.id!!)
         }
+
+        dbInteractor.deleteImage(image.convertToDbImage())
     }
 
     suspend fun getImageFromDb(imageId: String): List<Image> {
@@ -48,10 +50,6 @@ class PictureDetailsPresenter @Inject constructor(
             imageList.add(convertFromDbImage(it))
         }
         return imageList
-    }
-
-    suspend fun deleteImageFromDb(image: Image) {
-        dbInteractor.deleteImage(image.convertToDbImage())
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

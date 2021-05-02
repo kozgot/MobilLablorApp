@@ -29,10 +29,8 @@ class PicListPresenter @Inject constructor(
     private val uiContext: CoroutineContext = Dispatchers.Main) : Presenter<PicListScreen>() , CoroutineScope {
 
     private var job: Job = Job()
-
     override val coroutineContext: CoroutineContext
         get() = uiContext + job
-
 
     override fun attachScreen(screen: PicListScreen) {
         super.attachScreen(screen)

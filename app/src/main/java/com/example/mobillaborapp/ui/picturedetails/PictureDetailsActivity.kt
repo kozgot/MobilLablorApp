@@ -45,7 +45,7 @@ class PictureDetailsActivity : AppCompatActivity(), PictureDetailsScreen {
 
     private fun getImage(id: String) {
         if(isNetworkConnected()) {
-            pictureDetailsPresenter.getImageDetails(id)
+            pictureDetailsPresenter.loadImageFromAPI(id)
         }
         else {
             showToast(message = "No internet connection, loading details from DB")
@@ -118,12 +118,9 @@ class PictureDetailsActivity : AppCompatActivity(), PictureDetailsScreen {
             showToast(message = "No internet, cannot delete in offline mode!")
             return
         }
-        if (imageId != null) {
-            pictureDetailsPresenter.deleteImage(imageId!!)
-        }
         if (displayedImage != null) {
             lifecycleScope.launch(Dispatchers.Main) {
-                pictureDetailsPresenter.deleteImageFromDb(displayedImage!!)
+                pictureDetailsPresenter.deleteImage(displayedImage!!)
             }
         }
     }

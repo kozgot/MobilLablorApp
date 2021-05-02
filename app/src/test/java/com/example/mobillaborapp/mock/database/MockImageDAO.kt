@@ -36,10 +36,8 @@ class MockImageDAO : ImageDAO {
     }
 
     override suspend fun insertImage(vararg image: DbImage) {
-        TODO("Not yet implemented")
     }
 
     override suspend fun deleteImage(image: DbImage) {
-        TODO("Not yet implemented")
     }
 }
