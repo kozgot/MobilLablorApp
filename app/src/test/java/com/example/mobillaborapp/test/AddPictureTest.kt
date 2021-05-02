@@ -40,7 +40,7 @@ class AddPictureTest {
     fun testQueryBreedsFromDB() {
         runBlocking {
             launch(Dispatchers.Main) {  // Will be launched in the mainThreadSurrogate dispatcher
-                val list: List<DbBreed> =
+                val list: List<Breed> =
                         withContext(Dispatchers.IO) {
                             addPicturePresenter.queryBreedsFromDb()
                         }

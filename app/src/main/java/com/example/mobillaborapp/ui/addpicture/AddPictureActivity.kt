@@ -153,17 +153,13 @@ class AddPictureActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
     private fun getBreeds() {
         lifecycleScope.launch(Dispatchers.Main) {
-            val list: List<DbBreed> =
+            val list: List<Breed> =
                 lifecycleScope.async(Dispatchers.IO) {
                     addPicturePresenter.queryBreedsFromDb()
                 }.await()
 
             if (list.isNotEmpty()) {
-                var breedList = mutableListOf<Breed>()
-                list.forEach{
-                    breedList.add(convertFromDbBreed(it))
-                }
-                populateBreedSelector(breedList)
+                populateBreedSelector(list)
             }
             else {
                 // if the db is empty
