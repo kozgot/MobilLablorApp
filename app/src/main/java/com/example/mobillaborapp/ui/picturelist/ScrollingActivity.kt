@@ -11,10 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mobillaborapp.R
 import com.example.mobillaborapp.injector
-import com.example.mobillaborapp.model.database.DbImage
 import com.example.mobillaborapp.model.network.Breed
 import com.example.mobillaborapp.model.network.Image
-import com.example.mobillaborapp.model.utils.convertFromDbImage
 import com.example.mobillaborapp.ui.addpicture.AddPictureActivity
 import com.example.mobillaborapp.ui.utils.show
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -62,8 +60,8 @@ class ScrollingActivity : AppCompatActivity(), PicListScreen{
         super.onResume()
         if (!isNetworkConnected()) {
             // try to get Images from the DB
-            loadImagesFromDb()
             showToast(message = "No internet connection, loading images from DB")
+            loadImagesFromDb()
         }
         else {
             listPresenter.loadImagesFromAPI()
@@ -95,17 +93,13 @@ class ScrollingActivity : AppCompatActivity(), PicListScreen{
 
     private fun loadImagesFromDb() {
         lifecycleScope.launch(Dispatchers.Main) {
-            val list: List<DbImage> =
+            val list: List<Image> =
                 lifecycleScope.async(Dispatchers.IO) {
                     listPresenter.queryImagesFromDb()
                 }.await()
 
             if (list.isNotEmpty()) {
-                var imageList = mutableListOf<Image>()
-                list.forEach{
-                    imageList.add(convertFromDbImage(it))
-                }
-                showImages(imageList)
+                showImages(list)
             }
             else {
                 showToast(message = "The DB is empty")
