@@ -51,7 +51,7 @@ class PicListPresenter @Inject constructor(
         }
     }
 
-    fun queryBreeds() {
+    fun loadBreedsFromAPI() {
         executor.execute {
             networkInteractor.getBreeds()
         }

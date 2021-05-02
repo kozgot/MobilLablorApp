@@ -14,7 +14,6 @@ import com.example.mobillaborapp.injector
 import com.example.mobillaborapp.model.database.DbImage
 import com.example.mobillaborapp.model.network.Breed
 import com.example.mobillaborapp.model.network.Image
-import com.example.mobillaborapp.model.utils.convertFromDbBreed
 import com.example.mobillaborapp.model.utils.convertFromDbImage
 import com.example.mobillaborapp.ui.addpicture.AddPictureActivity
 import com.example.mobillaborapp.ui.utils.show
@@ -46,7 +45,7 @@ class ScrollingActivity : AppCompatActivity(), PicListScreen{
             this.startActivity(intent)
         }
         initRecyclerView()
-        listPresenter.queryBreeds()
+        listPresenter.loadBreedsFromAPI()
     }
 
     override fun onStart() {

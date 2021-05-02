@@ -1,6 +1,10 @@
 package com.example.mobillaborapp.test
 
+import com.example.mobillaborapp.model.database.DbBreed
+import com.example.mobillaborapp.model.network.Breed
 import com.example.mobillaborapp.model.network.Image
+import com.example.mobillaborapp.model.utils.convertFromDbBreed
+import com.example.mobillaborapp.model.utils.convertToDbBreed
 import com.example.mobillaborapp.testInjector
 import com.example.mobillaborapp.ui.picturelist.PicListPresenter
 import com.example.mobillaborapp.ui.picturelist.PicListScreen
@@ -31,12 +35,21 @@ class PictureListTest {
     }
 
     @Test
-    fun testArtists() {
+    fun testLoadImages() {
         listPresenter.loadImagesFromAPI()
 
         val list = argumentCaptor<MutableList<Image>>()
         Mockito.verify(picListScreen).showImages(list.capture())
         assert(list.value.size > 0)
+    }
+
+    @Test
+    fun testLoadBreeds() {
+        listPresenter.loadBreedsFromAPI()
+
+        val breedList = argumentCaptor<MutableList<Breed>>()
+        Mockito.verify(picListScreen).breedsDownLoaded(breedList.capture())
+        assert(breedList.value.size > 0)
     }
 
     @After

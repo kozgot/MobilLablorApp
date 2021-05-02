@@ -15,7 +15,7 @@ fun Breed.convertToDbBreed(): DbBreed {
         this.adaptability, this.affectionLevel, this.countryCode,
         this.childFriendly, this.dogFriendly, this.energyLevel,
         this.grooming, this.healthIssues, this.intelligence,
-        this.sheddingLevel, this.socialNeeds, this.vocalisation)
+        this.sheddingLevel, this.socialNeeds, this.strangerFriendly, this.vocalisation)
 }
 
 fun convertFromDbBreed(dbBreed: DbBreed): Breed {
@@ -28,7 +28,7 @@ fun convertFromDbBreed(dbBreed: DbBreed): Breed {
         dbBreed.adaptability, dbBreed.affectionLevel, dbBreed.countryCode,
         dbBreed.childFriendly, dbBreed.dogFriendly, dbBreed.energyLevel,
         dbBreed.grooming, dbBreed.healthIssues, dbBreed.intelligence,
-        dbBreed.sheddingLevel, dbBreed.socialNeeds, dbBreed.vocalisation)
+        dbBreed.sheddingLevel, dbBreed.socialNeeds, dbBreed.strangerFriendly, dbBreed.vocalisation)
 }
 
 fun Image.convertToDbImage(): DbImage {
