@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="320dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_picture_placeholder_foreground" />
 
         <include layout="@layout/details_content" />
     </LinearLayout>

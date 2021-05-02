@@ -20,7 +20,7 @@ class NetworkInteractor @Inject constructor(private var catApi: CatAPI) {
             val response = catImagesQueryCall.execute()
             Log.d("Response", response.body().toString())
             if (response.code() != 200) {
-                throw Exception("Result code is not 200")
+                throw Exception(response.message())
             }
             event.code = response.code()
             event.images = response.body()
@@ -40,7 +40,7 @@ class NetworkInteractor @Inject constructor(private var catApi: CatAPI) {
             val response = catImagesQueryCall.execute()
             Log.d("Response", response.body().toString())
             if (response.code() != 200) {
-                throw Exception("Result code is not 200")
+                throw Exception(response.message())
             }
             event.code = response.code()
             event.images = response.body()
@@ -60,7 +60,7 @@ class NetworkInteractor @Inject constructor(private var catApi: CatAPI) {
             val response = catBreedsQueryCall.execute()
             Log.d("Response", response.body().toString())
             if (response.code() != 200) {
-                throw Exception("Result code is not 200")
+                throw Exception(response.message())
             }
             event.code = response.code()
             event.breeds = response.body()
@@ -80,7 +80,7 @@ class NetworkInteractor @Inject constructor(private var catApi: CatAPI) {
             val response = catImageQueryCall.execute()
             Log.d("Response", response.body().toString())
             if (response.code() != 200) {
-                throw Exception("Result code is not 200")
+                throw Exception(response.message())
             }
             event.code = response.code()
             event.image = response.body()
@@ -100,7 +100,7 @@ class NetworkInteractor @Inject constructor(private var catApi: CatAPI) {
             val response = deleteImageQueryCall.execute()
             Log.d("Response", response.body().toString())
             if (response.code() != 204) {
-                throw Exception("Result code is not 204" + response.code())
+                throw Exception(response.message())
             }
             event.code = response.code()
             EventBus.getDefault().post(event)
@@ -119,7 +119,7 @@ class NetworkInteractor @Inject constructor(private var catApi: CatAPI) {
             val response = uploadImageQueryCall.execute()
             Log.d("Response", response.body().toString())
             if (response.code() != 201) {
-                throw Exception("Result code is not 201")
+                throw Exception(response.message())
             }
             event.code = response.code()
             event.result = response.body()
