@@ -35,8 +35,8 @@ class PictureDetailsActivityTest : EspressoTest<PictureDetailsActivity>(PictureD
     }
 
     companion object {
-        private const val IMAGEID = "AC/DC"
-        private const val BreedName = "Abyssian"
+        private const val IMAGEID = "2u0QIn3hP"
+        private const val BreedName = "Bambino"
     }
 
     @After
