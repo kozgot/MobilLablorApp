@@ -34,4 +34,16 @@ data class DbImage(
 
         @ColumnInfo(name = "breedids")
         var breedIds: String? = null
-)
+) {
+        override fun equals(other: Any?) = (other is DbImage) &&
+                other.breed == this.breed &&
+                other.breedIds == this.breedIds &&
+                other.imageId == this.imageId &&
+                other.originalFilename == this.originalFilename &&
+                other.originalImageId == this.originalImageId &&
+                other.createdAt == this.createdAt &&
+                other.subId == this.subId &&
+                other.url == this.url &&
+                other.height == this.height &&
+                other.width == this.width
+}
