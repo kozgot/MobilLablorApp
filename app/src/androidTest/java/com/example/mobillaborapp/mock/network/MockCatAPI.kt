@@ -1,7 +1,5 @@
 package com.example.mobillaborapp.mock.network
 
-import com.example.mobillaborapp.model.database.DbBreed
-import com.example.mobillaborapp.model.database.DbImage
 import com.example.mobillaborapp.model.network.Breed
 import com.example.mobillaborapp.model.network.Image
 import com.example.mobillaborapp.model.network.UploadResponse

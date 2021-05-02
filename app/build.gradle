@@ -33,6 +33,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -105,4 +110,6 @@ dependencies {
     androidTestImplementation "com.google.dagger:dagger:$dagger_version"
     androidTestImplementation 'javax.annotation:jsr250-api:1.0'
     kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
+
+    testImplementation 'androidx.test:core:1.0.0'
 }

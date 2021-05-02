@@ -19,5 +19,5 @@ class MockNetworkModule {
 
     @Provides
     @Singleton
-    fun provideArtistsApi(): CatAPI = MockCatAPI()
+    fun provideCatsApi(): CatAPI = MockCatAPI()
 }
