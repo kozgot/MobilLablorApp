@@ -13,12 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.mobillaborapp.R
 import com.example.mobillaborapp.injector
-import com.example.mobillaborapp.model.database.DbBreed
-import com.example.mobillaborapp.model.database.DbImage
-import com.example.mobillaborapp.model.network.Breed
 import com.example.mobillaborapp.model.network.Image
-import com.example.mobillaborapp.model.utils.convertFromDbBreed
-import com.example.mobillaborapp.model.utils.convertFromDbImage
 import com.example.mobillaborapp.ui.picturelist.ScrollingActivity
 import kotlinx.android.synthetic.main.details_content.*
 import kotlinx.coroutines.Dispatchers
@@ -55,14 +50,13 @@ class PictureDetailsActivity : AppCompatActivity(), PictureDetailsScreen {
         else {
             showToast(message = "No internet connection, loading details from DB")
             lifecycleScope.launch(Dispatchers.Main) {
-                val dbImageList: List<DbImage> =
+                val imageList: List<Image> =
                     lifecycleScope.async(Dispatchers.IO) {
                         pictureDetailsPresenter.getImageFromDb(id)
                     }.await()
 
-                if (dbImageList.isNotEmpty()) {
-                    var imageresult = convertFromDbImage(dbImageList[0])
-                    showImage(imageresult)
+                if (imageList.isNotEmpty()) {
+                    showImage(imageList[0])
                 }
                 else {
                     showToast(message = "Image not found in DB")

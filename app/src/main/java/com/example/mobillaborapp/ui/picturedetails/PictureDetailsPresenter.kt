@@ -4,6 +4,7 @@ import com.example.mobillaborapp.events.DeleteImageEvent
 import com.example.mobillaborapp.events.GetImageEvent
 import com.example.mobillaborapp.model.database.DbImage
 import com.example.mobillaborapp.model.network.Image
+import com.example.mobillaborapp.model.utils.convertFromDbImage
 import com.example.mobillaborapp.model.utils.convertToDbImage
 import com.example.mobillaborapp.repository.database.DBInteractor
 import com.example.mobillaborapp.repository.network.NetworkInteractor
@@ -40,8 +41,13 @@ class PictureDetailsPresenter @Inject constructor(
         }
     }
 
-    suspend fun getImageFromDb(imageId: String): List<DbImage> {
-        return dbInteractor.getImage(imageId)
+    suspend fun getImageFromDb(imageId: String): List<Image> {
+        var dbImageList = dbInteractor.getImage(imageId)
+        var imageList = mutableListOf<Image>()
+        dbImageList.forEach{
+            imageList.add(convertFromDbImage(it))
+        }
+        return imageList
     }
 
     suspend fun deleteImageFromDb(image: Image) {

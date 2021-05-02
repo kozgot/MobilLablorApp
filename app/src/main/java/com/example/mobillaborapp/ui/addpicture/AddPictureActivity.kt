@@ -14,9 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import com.example.mobillaborapp.R
 import com.example.mobillaborapp.injector
-import com.example.mobillaborapp.model.database.DbBreed
 import com.example.mobillaborapp.model.network.Breed
-import com.example.mobillaborapp.model.utils.convertFromDbBreed
 import com.example.mobillaborapp.ui.picturelist.ScrollingActivity
 import com.example.mobillaborapp.ui.utils.getFileName
 import kotlinx.android.synthetic.main.activity_add_picture.*
