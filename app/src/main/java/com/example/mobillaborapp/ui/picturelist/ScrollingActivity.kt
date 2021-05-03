@@ -39,6 +39,8 @@ class ScrollingActivity : AppCompatActivity(), PicListScreen{
         setSupportActionBar(findViewById(R.id.toolbar))
         findViewById<Toolbar>(R.id.toolbar).title = title
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
+            // uncomment to test firebase crashlytics
+            // throw RuntimeException("Test crash!")
             val intent = Intent(this, AddPictureActivity::class.java)
             this.startActivity(intent)
         }
